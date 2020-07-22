@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "h-category-grid":"/components/category-grid/index",
+    "h-spu-scroll":"/components/spu-scroll/index",
+    "h-host-list":"/components/host-list/index",
+    "l-water-flow":"/miniprogram_npm/lin-ui/water-flow/index"
+  }
+}
