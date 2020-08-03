@@ -32,6 +32,26 @@ Component({
      * 组件的方法列表
      */
     methods: {
+        /**
+         * 图片加载触发
+         *  */
+        ImgOnload(event){
+           const {width,height} = event.detail
+          this.setData({
+              w:340,
+              h:340*height/width
+          })
+        },
 
+        /**
+         * 点击事件
+        */
+        onItemTap(event){
+            console.log(event)
+            const pid = event.currentTarget.dataset.pid
+            wx.navigateTo({
+              url: `/pages/detail/detail?pid=${pid}`,
+            })
+        }
     }
 })

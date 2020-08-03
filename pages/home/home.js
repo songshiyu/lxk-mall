@@ -4,7 +4,7 @@ const { Categoty } = require("../../model/category")
 const { Activity } = require("../../model/Activity")
 const { Theme } = require("../../model/Theme")
 const { SpuPaging } = require("../../model/spu_paging")
-const { pageing } = require("../../utils/paging")
+
 
 Page({
   /**
@@ -19,7 +19,9 @@ Page({
     grid:[],
     activityD:null,
     BannerG:null,
-    ThemeH:null
+    ThemeH:null,
+    copyPaging:null,
+    loadingType:"loading"
   },
 
 
@@ -74,6 +76,9 @@ Page({
   },
   async initBottomSpuList(){
     const paging = SpuPaging.getLastestPaging()
+    this.setData({
+      copyPaging:paging
+    })
     const data = await paging.getMoreData()
     if(!data){
         return
@@ -81,6 +86,21 @@ Page({
    wx.lin.renderWaterFlow(data.items)
   },
 
+   /**
+   * 页面上拉触底事件的处理函数
+   */
+   async onReachBottom () {
+     const spu_more = await this.data.copyPaging.getMoreData()
+     if(!spu_more){
+        return
+     }
+     wx.lin.renderWaterFlow(spu_more.items)
+     if(!spu_more.moreData){
+        this.setData({
+          loadingType:'end'
+        })  
+     }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -113,13 +133,6 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
 
   },
 

@@ -35,7 +35,8 @@ class pageing{
     }
 
     async _actualGetData(){
-        let paging = await Http.request(this.req)
+        const req = this._getCurrentReq()
+        let paging = await Http.request(req)
         if(!paging){
             return
         }
@@ -47,7 +48,7 @@ class pageing{
                 accumulator:[]
             }
         }
-        this.moreData = this._ifMoreData(paging.page,paging.total_page)
+        this.moreData = this._ifMoreData(paging.total_page,paging.page)
         if(this.moreData){
             this.start += this.count
         }
